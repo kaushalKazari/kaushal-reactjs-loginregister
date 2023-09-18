@@ -59,12 +59,12 @@ export default function Crud1() {
     const changeValue = (e)=>{
         // console.log(e.target.value);
         setTeachername(e.target.value);
-        console.log('Hook Variable teachername', teachername);
+        // console.log('Hook Variable teachername', teachername);
         setPayload({
             ...payload,
             data:{
-                // name:teachername
-                name:document.querySelector('#teachernameId').value
+                name:teachername
+                // name:document.querySelector('#teachernameId').value
             }
         })
     }
@@ -78,25 +78,89 @@ export default function Crud1() {
             body: JSON.stringify(payload)
         })
         .then(res=>{
-            console.log(res);
+            // console.log(res);
             return res.json()
         })
         .then(data=>{
             // return console.log(data)
-            console.log(data);
+            // console.log(data);
             if(data){
                 swal("Good job!", "Teacher Name created Successfully.", "success");
             }
         })
         .catch(err=>{
-            console.log(err)
+            // console.log(err)
         })
+    }
+
+    const deleteTeacher = (e)=>{
+        document.getElementById('loader').innerHTML(`<div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>`)
+        let tr = e.target.closest('tr');
+        let delId = tr.querySelector('td:first-child').innerHTML;
+        // let ans = window.confirm('Are you sure, do you really want to delete ?');
+        // if(ans === true){
+        //     // call the delete REST API
+        //     console.log(`http://localhost:1337/api/amezonedatas/${delId}`); 
+        //     fetch(`http://localhost:1337/api/amezonedatas/${delId}`,{
+        //         method:"DELETE"
+        //     })
+        //     .then((res)=>{
+        //         // this json() data make the incomming data json redable
+        //         return res.json();
+        //     })
+        //     .then((data)=>{
+        //         tr.remove();
+        //         console.log(data);
+        //     })
+        //     .catch(()=>{
+                
+        //     })
+        // }
+        // alert(ans);
+        // console.log(e.target.closest('tr').querySelector('td:first-child').innerHTML);
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                // call the delete REST API
+                fetch(`http://localhost:1337/api/amezonedatas/${delId}`,{
+                    method:'DELETE'
+                })
+                .then((res)=>{
+                    // this json() data make the incomming data json redable
+                    return res.json();
+                })
+                .then((data)=>{
+                    tr.remove();
+                    console.log(data);
+                })
+                .catch(()=>{
+                    
+                })
+              swal("Poof! Your imaginary file has been deleted!", {
+                icon: "success",
+              });
+              document.getElementById('loader').innerHTML = '';
+            } else {
+              swal("Your imaginary file is safe!");
+            }
+          });
     }
 
     // 2.3 return statement
 
     return (
         <>
+        <div id="loader"></div>
             <div className='container'>
                 <div>
                     <h1>Crud1</h1>
@@ -109,12 +173,13 @@ export default function Crud1() {
                 <br/>
                 <hr/>
                 <h2>Your created data</h2>
-                <table class="table">
+                <table className="table">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">CreatedAt</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -123,9 +188,14 @@ export default function Crud1() {
         return(
             <>
             <tr>
-                <th scope="row">{cv.id}</th>
+                <td scope="row">{cv.id}</td>
                 <td>{cv.name}</td>
                 <td>{cv.createdAt}</td>
+                <td>
+                    <button className='btn btn-primary btn-sm'>View</button>
+                    <button className='btn btn-info btn-sm ms-2'>Edit</button>
+                    <button className='btn btn-danger btn-sm ms-2' onClick={(e)=>deleteTeacher(e)}>Delete</button>
+                </td>
             </tr>
             </>
         )
