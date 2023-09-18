@@ -1,8 +1,10 @@
 // 1. import area
+import Crud1 from "../pages/Crud1";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Register2 from "../pages/Register2";
+import Register3 from "../pages/Register3";
 
 
 // 2. functional area
@@ -22,6 +24,14 @@ export const routes = [
     {
       path:"register2",
       element:<Register2/>
+    },
+    {
+      path:"register3",
+      element:<Register3/>
+    },
+    {
+      path:"crud1",
+      element:<Crud1/>
     }
   ]
 
