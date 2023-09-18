@@ -14,39 +14,69 @@ const Register3 = () => {
     const [state, setState] = useState("")
 
 
+    const [payload, setPayload] = useState(
+        {
+            "data": {
+              "name": "Divyansh Kumar",
+              "mobile": 9873168672,
+              "pincode": 844507,
+              "flat": "H2",
+              "area": "Kazari Khurd",
+              "landmark": "Infront of school",
+              "country": "India",
+              "state": "Bihar"
+            }
+          }
+    )
+
+
     function SaveData() {
         // console.log(name, mobile, pincode, flat, area, country, landmark, state)
 
-        let data = {
-           'name' : name,
-            'mobile': mobile,
-            'pincode': pincode,
-            'flat': flat,
-            'area': area,
-            'landmark': landmark,
-            'country': country,
-            'state': state
-        }
+        // let data = {
+        //    'name' : name,
+        //     'mobile': mobile,
+        //     'pincode': pincode,
+        //     'flat': flat,
+        //     'area': area,
+        //     'landmark': landmark,
+        //     'country': country,
+        //     'state': state
+        // }
+        // let data = [
+        //     {
+        //         "data": {
+        //           "name": "Pooja",
+        //           "mobile": 987316867112,
+        //           "pincode": 121134,
+        //           "flat": "Pooja",
+        //           "area": "Pooja",
+        //           "landmark": "Near11 Pooja Sani Mandir",
+        //           "country": "India",
+        //           "state": "Bihar"
+        //         }
+        //       }
+        // ]
 
-        fetch(`http://localhost:1337/api/amazondatas`,{
-            method:"POST",
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+        fetch(`http://localhost:1337/api/amezonedatas`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            body:JSON.stringify(data)
-            })
-            .then((res)=>{
-                return res.json()
-            })
-            .then((data)=>{
-              console.log(data)
-            if(data.jwt){
-              // alert("you registerd successfully")
-              swal("Good job!", "you registerd successfully.", "success");
+            body: JSON.stringify(payload)
+        }).then((res) => {
+            // console.log(res);
+            return res.json()
+        }).then((data) => {
+            console.log(data)
+            if (data.jwt) {
+                // alert("you registerd successfully")
+                swal("Good job!", "you registerd successfully.", "success");
             }
-            
-            }).catch((err)=>{console.log(err)})
+
+        }).catch((err) => {
+            // console.log(err)
+        })
     }
 
     return (
@@ -75,11 +105,11 @@ const Register3 = () => {
                         </div>
                         <div className="col-12">
                             <label className="form-label">Area, Street, Sector, Village</label>
-                            <input type="text" name="area" value={area} onChange={(e) => { setArea(e.target.value) }} className="form-control"/>
+                            <input type="text" name="area" value={area} onChange={(e) => { setArea(e.target.value) }} className="form-control" />
                         </div>
                         <div className="col-12">
                             <label className="form-label">Landmark</label>
-                            <input type="text" placeholder="e.g. near apollo hospital" name="landmark" value={landmark} onChange={(e) => { setLandmark(e.target.value) }} className="form-control"/>
+                            <input type="text" placeholder="e.g. near apollo hospital" name="landmark" value={landmark} onChange={(e) => { setLandmark(e.target.value) }} className="form-control" />
                         </div>
                         <div className="col-md-6">
                             <label className="form-label" >Country/Region</label>
