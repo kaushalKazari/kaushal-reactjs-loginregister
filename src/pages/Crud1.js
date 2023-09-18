@@ -1,5 +1,6 @@
 // 1. import area
 import React, { useEffect, useState } from 'react'
+import swal from 'sweetalert';
 
 // 2. function definition area
 export default function Crud1() {
@@ -17,6 +18,15 @@ export default function Crud1() {
                                                     createdAt:'3658'
                                                 }
                                             ])
+
+    const[payload, setPayload] = useState([
+                                            {
+                                                "data": {
+                                                "name": "Teacher3"
+                                                }
+                                            }
+                                        ])
+    const[teachername, setTeachername] = useState('');
 
     // useEffect is use for page load
     // i want to call the api after the page load
@@ -46,7 +56,42 @@ export default function Crud1() {
     // Every hook is a function
 
     // 2.2 function definition area
+    const changeValue = (e)=>{
+        // console.log(e.target.value);
+        setTeachername(e.target.value);
+        console.log('Hook Variable teachername', teachername);
+        setPayload({
+            ...payload,
+            data:{
+                // name:teachername
+                name:document.querySelector('#teachernameId').value
+            }
+        })
+    }
 
+    let sendData = () =>{
+        fetch(`http://localhost:1337/api/teachers`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(res=>{
+            console.log(res);
+            return res.json()
+        })
+        .then(data=>{
+            // return console.log(data)
+            console.log(data);
+            if(data){
+                swal("Good job!", "Teacher Name created Successfully.", "success");
+            }
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
 
     // 2.3 return statement
 
@@ -56,10 +101,10 @@ export default function Crud1() {
                 <div>
                     <h1>Crud1</h1>
                     <div className="mb-3">
-                        <label htmlFor="exampleFormControlInput1" className="form-label">Name</label>
-                        <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Please Enter Your Name" />
+                        <label htmlFor="teachernameId" className="form-label">Name</label>
+                        <input type="text" name='name' onKeyUp={(e)=>{ return changeValue(e) }} className="form-control" id="teachernameId" placeholder="Please Enter Your Name" />
                     </div>
-                    <button type="button" className="btn btn-primary">Submit</button>
+                    <button type="button" className="btn btn-primary" onClick={sendData}>Submit</button>
                 </div>
                 <br/>
                 <hr/>

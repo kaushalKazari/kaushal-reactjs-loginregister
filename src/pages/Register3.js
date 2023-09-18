@@ -33,7 +33,6 @@ const Register3 = () => {
             headers:{
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization':'Bearer d7100b5ba763ce8e33cb653060e3597d44896584a4471d86426903c2fdf17e9a09e873941e675b351a9a7bd20e298628b36ef54278b4f8b92d08488844fe6c5b6279e31b4142a002533d4ed9a799cecd45012c0b349368039e145cae38078fac4ab62ce83cdb015a4529f3be961b1af1f80de9facd5a61fd2bac6c654ff55b3c'
             },
             body:JSON.stringify(data)
             })
