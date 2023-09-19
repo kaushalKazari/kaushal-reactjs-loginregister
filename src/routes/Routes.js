@@ -1,5 +1,6 @@
 // 1. import area
 import Crud1 from "../pages/Crud1";
+import EditTeacher from "../pages/EditTeacher";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -32,6 +33,10 @@ export const routes = [
     {
       path:"crud1",
       element:<Crud1/>
+    },
+    {
+      path:"editteacher",
+      element:<EditTeacher/>
     }
   ]
 

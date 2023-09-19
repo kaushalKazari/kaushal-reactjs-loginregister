@@ -1,5 +1,6 @@
 // 1. import area
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 
 // 2. function definition area
@@ -19,13 +20,13 @@ export default function Crud1() {
                                                 }
                                             ])
 
-    const[payload, setPayload] = useState([
+    const[payload, setPayload] = useState(
                                             {
                                                 "data": {
                                                 "name": "Teacher3"
                                                 }
                                             }
-                                        ])
+                                        )
     const[teachername, setTeachername] = useState('');
 
     // useEffect is use for page load
@@ -187,13 +188,13 @@ export default function Crud1() {
     teachers.map((cv, idx, arr)=>{
         return(
             <>
-            <tr>
+            <tr key={idx}>
                 <td>{cv.id}</td>
                 <td>{cv.name}</td>
                 <td>{cv.createdAt}</td>
                 <td>
                     <button className='btn btn-primary btn-sm'>View</button>
-                    <button className='btn btn-info btn-sm ms-2'>Edit</button>
+                    <Link to={`/editteacher?id=${cv.id}&name=${cv.name}`} className='btn btn-info btn-sm ms-2'>Edit</Link>
                     <button className='btn btn-danger btn-sm ms-2' onClick={(e)=>deleteTeacher(e)}>Delete</button>
                 </td>
             </tr>
