@@ -94,11 +94,11 @@ export default function Crud1() {
     }
 
     const deleteTeacher = (e)=>{
-        document.getElementById('loader').innerHTML(`<div className="d-flex justify-content-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>`)
+    //     document.getElementById('loader').innerHTML(`<div className="d-flex justify-content-center">
+    //     <div className="spinner-border" role="status">
+    //       <span className="visually-hidden">Loading...</span>
+    //     </div>
+    //   </div>`)
         let tr = e.target.closest('tr');
         let delId = tr.querySelector('td:first-child').innerHTML;
         // let ans = window.confirm('Are you sure, do you really want to delete ?');
@@ -132,7 +132,7 @@ export default function Crud1() {
           .then((willDelete) => {
             if (willDelete) {
                 // call the delete REST API
-                fetch(`http://localhost:1337/api/amezonedatas/${delId}`,{
+                fetch(`http://localhost:1337/api/teachers/${delId}`,{
                     method:'DELETE'
                 })
                 .then((res)=>{
@@ -149,7 +149,7 @@ export default function Crud1() {
               swal("Poof! Your imaginary file has been deleted!", {
                 icon: "success",
               });
-              document.getElementById('loader').innerHTML = '';
+            //   document.getElementById('loader').innerHTML = '';
             } else {
               swal("Your imaginary file is safe!");
             }
@@ -160,7 +160,7 @@ export default function Crud1() {
 
     return (
         <>
-        <div id="loader"></div>
+        {/* <div id="loader"></div> */}
             <div className='container'>
                 <div>
                     <h1>Crud1</h1>
@@ -188,7 +188,7 @@ export default function Crud1() {
         return(
             <>
             <tr>
-                <td scope="row">{cv.id}</td>
+                <td>{cv.id}</td>
                 <td>{cv.name}</td>
                 <td>{cv.createdAt}</td>
                 <td>
