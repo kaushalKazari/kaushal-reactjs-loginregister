@@ -1,11 +1,12 @@
 // 1. import area
-import Crud1 from "../pages/Crud1";
-import EditTeacher from "../pages/EditTeacher";
 import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import Register2 from "../pages/Register2";
-import Register3 from "../pages/Register3";
+import AdminDashboard from "../pages/admindashboard/AdminDashboard";
+import BusinessCategory from "../pages/justdial/BusinessCategory";
+import JustDialBusinessRegister from "../pages/justdial/JustDialBusinessRegister";
+import JustDialLogin from "../pages/justdial/JustDialLogin";
+import JustDialRegister from "../pages/justdial/JustDialRegister";
+import CreateStudent from "../pages/student/CreateStudent";
+import CreateTeacher from "../pages/teacher/CreateTeacher";
 
 
 // 2. functional area
@@ -15,29 +16,33 @@ export const routes = [
       element:<Home/>
     },
     {
-      path:"login",
-      element:<Login/>
+      path:"teacher/create",
+      element:<CreateTeacher/>
     },
     {
-      path:"register",
-      element:<Register/>
+      path:"student/create",
+      element:<CreateStudent/>
     },
     {
-      path:"register2",
-      element:<Register2/>
+      path:"admin/dashboard",
+      element:<AdminDashboard/>
     },
     {
-      path:"register3",
-      element:<Register3/>
+      path:"justdial/category",
+      element:<BusinessCategory/>
     },
     {
-      path:"crud1",
-      element:<Crud1/>
+      path:"justdial/login",
+      element:<JustDialLogin/>
     },
     {
-      path:"editteacher",
-      element:<EditTeacher/>
-    }
+      path:"justdial/register",
+      element:<JustDialRegister/>
+    },
+    {
+      path:"justdial/businessregister",
+      element:<JustDialBusinessRegister/>
+    }    
   ]
 
 // 3. export area

@@ -1,56 +1,92 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 
 export default function Register() {
-    //1. Hook Varibale area
+    // hooks area
+    const[username, setUsername]=useState('');
+    const[email, setEmail]=useState('');
+    const[password, setPassword]=useState('');
 
-  let sendData = ()=>{
-    let data={
-        username: "Vipin",
-        email: "vipin@gmail.com",
-        password: "Vipin@123"
+    // function area
+    const createUser =()=>{
+       let data ={
+        "username": username,
+        "email": email,
+        "password": password
+      }
+      fetch(`http://localhost:1337/api/auth/local/register`,{
+        method: "POST",  
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+      })
+      .then((res)=>{
+            return res.json();
+      })
+      .then((data)=>{
+        console.log(data);
+        if(data.jwt){            
+            swal("Good job!", "login successfully", "success");
+        }
+      })
+      .catch(err=>err)
     }
-    console.log(data);
-    fetch(`http://localhost:1337/api/auth/local/register`,{
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method:'POST',       
-        body: JSON.stringify(data)
-    })
-    // .then((res)=>{
-    //     console.log(res);
-    //     if(!res.ok){
-    //         console.log('could not fetch data from that resource')
-    //     }
-    //     return res.JSON()
-    // })
-    // .then((data)=>{
-    //    console.log(data)
-    // }).catch((error)=>{
-    //     console.log(error.message)
-    // });
-  }
-  return (
-    <div className='container'>
-    <h1>Register Form</h1>
-    <form className="row g-3" method="POST" enctype="multipart/form-data">
-    <div className="col-md-6">
-    <label className="form-label">User Name</label>
-    <input type="text" name="username" className="form-control"/>
-  </div>
-  <div className="col-md-6">
-    <label className="form-label">Email</label>
-    <input type="email" name='email' className="form-control"/>
-  </div>
-  <div className="col-md-6">
-    <label className="form-label">Password</label>
-    <input type="password" name='password' className="form-control"/>
-  </div>
-  <div className="col-12">
-    <button type="button" onClick={sendData} className="btn btn-primary">Register</button>
-  </div>
-</form>
-</div>
-  )
+
+    return (
+        <>
+            <div className="login-area">
+                <div className="container">
+                    <div className="login-box ptb--100">
+                        <form>
+                            <div className="login-form-head">
+                                <h4>Sign up</h4>
+                                <p>Hello there, Sign up and Join with Us</p>
+                            </div>
+                            <div className="login-form-body">
+                                <div className="form-gp focused">
+                                    <label htmlFor="exampleInputName1">User Name</label>
+                                    <input name='username' type="text" id="exampleInputName1"
+                                    onChange={(e)=>{setUsername(e.target.value)}} />
+                                    <i className="ti-user" />
+                                    <div className="text-danger" />
+                                </div>
+                                <div className="form-gp focused">
+                                    <label htmlFor="exampleInputEmail1">Email address</label>
+                                    <input name='email' type="email" id="exampleInputEmail1"
+                                    onChange={(e)=>{setEmail(e.target.value)}} />
+                                    <i className="ti-email" />
+                                    <div className="text-danger" />
+                                </div>
+                                <div className="form-gp focused">
+                                    <label htmlFor="exampleInputPassword1">Password</label>
+                                    <input name='password' type="password" id="exampleInputPassword1"
+                                    onChange={(e)=>{setPassword(e.target.value)}} />
+                                    <i className="ti-lock" />
+                                    <div className="text-danger" />
+                                </div>
+                                <div className="submit-btn-area">
+                                    <button id="form_submit" type="button"
+                                    onClick={createUser}>Submit <i className="ti-arrow-right" /></button>
+                                    <div className="login-other row mt-4">
+                                        <div className="col-6">
+                                            <a className="fb-login" href="#">Sign up with <i className="fa fa-facebook" /></a>
+                                        </div>
+                                        <div className="col-6">
+                                            <a className="google-login" href="#">Sign up with <i className="fa fa-google" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="form-footer text-center mt-5">
+                                    <p className="text-muted">Don't have an account? <Link to='/login'>Sign in</Link></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </>
+    )
 }
