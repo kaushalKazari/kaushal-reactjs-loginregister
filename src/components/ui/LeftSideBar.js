@@ -1,15 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Logo from '../../logo.png'
+// import Logo from '../../logo.png'
+import { URL } from '../../assets/helper';
 
 export default function LeftSideBar() {
+  // hooks area
+  const[logo, setLogo]=useState();
+  useEffect(()=>{
+    fetch(`${URL}/api/website?populate=*`)
+    .then((res)=>{
+      return res.json()
+    })
+    .then((data)=>{
+      console.log(data);
+      setLogo(data.data.attributes.logo.data.attributes.url);
+    })
+    .catch(err=>err)
+  },[])
+
   return (
     <>
         <div className="sidebar-menu">
   <div className="sidebar-header">
     <div className="logo">
       <a href="index.html">
-      <img src={Logo} width='100'/>
+      {/* <img src={Logo} width='100'/> */}
+      <img src={`${URL}${logo}`} width='100'/>
       </a>
     </div>
   </div>
