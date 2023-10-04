@@ -24,10 +24,10 @@ export default function LeftSideBar() {
         <div className="sidebar-menu">
   <div className="sidebar-header">
     <div className="logo">
-      <a href="index.html">
+      <Link to="/">
       {/* <img src={Logo} width='100'/> */}
       <img src={`${URL}${logo}`} width='100'/>
-      </a>
+      </Link>
     </div>
   </div>
   <div className="main-menu">

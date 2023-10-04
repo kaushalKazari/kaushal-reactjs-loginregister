@@ -1,5 +1,7 @@
 // 1. import area
+import Geolocation from "../pages/Geolocation";
 import Home from "../pages/Home";
+import SearchFilter from "../pages/SearchFilter";
 import AdminDashboard from "../pages/admindashboard/AdminDashboard";
 import BusinessCategory from "../pages/justdial/BusinessCategory";
 import JustDialBusinessRegister from "../pages/justdial/JustDialBusinessRegister";
@@ -42,7 +44,15 @@ export const routes = [
     {
       path:"justdial/businessregister",
       element:<JustDialBusinessRegister/>
-    }    
+    },
+    {
+      path:"geolocation",
+      element:<Geolocation/>
+    },
+    {
+      path:"searchfilter",
+      element:<SearchFilter/>
+    }
   ]
 
 // 3. export area

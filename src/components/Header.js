@@ -1,7 +1,56 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Button, Form } from 'react-bootstrap'
+import Geocode from "react-geocode";
 
 export default function Header() {
+  const [address,setAddress] = useState('');
+
+// function definition area
+let detectLocation = ()=>{ //Fat Arrow function
+  //alert('JIJIJIJIJ');
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+      
+  } else {
+     
+  }
+}
+
+let showPosition=(position)=>{
+  console.log(position.coords.latitude);
+  console.log(position.coords.longitude);
+  window.localStorage.setItem('lat',position.coords.latitude);
+  window.localStorage.setItem('long',position.coords.longitude);
+
+   // Get address from latitude & longitude.
+  Geocode.fromLatLng(position.coords.latitude, position.coords.longitude ).then(res=>res.json()).then(
+      (response) => {
+          console.log('response--------->',response);
+          if(response.results.length >0){
+              var adrr = response.results[0].formatted_address;
+              setAddress(adrr)
+              window.localStorage.setItem('address',adrr);
+              console.log(adrr);
+          }else{
+
+              var addr = response.plus_code.compound_code;
+              setAddress(addr)
+              window.localStorage.setItem('address',addr);
+              console.log(addr);
+          }
+      },
+      (error) => {
+          
+          console.error('errror -------->',JSON.stringify(error));
+      }
+  ).catch(err=>{
+      console.error('errror -------->',JSON.stringify(err));
+  });
+  
+  //x.innerHTML = "Latitude: " + position.coords.latitude +
+ //"<br>Longitude: " + position.coords.longitude;
+}
+
   return (
     <>
     {/* <div className='container'>
@@ -22,20 +71,30 @@ export default function Header() {
 
 <div className="header-area">
   <div className="row align-items-center">
-    <div className="col-md-6 col-sm-8 clearfix">
-      <div className="nav-btn pull-left">
-        <span />
-        <span />
-        <span />
-      </div>
-      <div className="search-box pull-left">
-        <form action="#">
-          <input type="text" name="search" placeholder="Search..." required />
-          <i className="ti-search" />
-        </form>
-      </div>
+    <div className="col-md-8 col-sm-8 clearfix">
+    <Form className="d-flex">
+                            <Button className="btn btn-sm" onClick={()=>{ detectLocation() }}>Detect Location</Button>
+                            <Form.Control
+                                type="text"
+                                readOnly
+                                disabled
+                                value={address}
+                                placeholder="Search"
+                                className="me-2"
+                                aria-label="Search"
+                                id="demo"
+                            />
+                            <Form.Control
+                                type="search"
+                                placeholder="Search"
+                                className="me-2"
+                                aria-label="Search"
+                                id="demo2"
+                            />
+                            <Button variant="outline-success">Search</Button>
+                        </Form>
     </div>
-    <div className="col-md-6 col-sm-4 clearfix">
+    <div className="col-md-4 col-sm-4 clearfix">
       <ul className="notification-area pull-right">
         <li id="full-view"><i className="ti-fullscreen" /></li>
         <li id="full-view-exit"><i className="ti-zoom-out" /></li>

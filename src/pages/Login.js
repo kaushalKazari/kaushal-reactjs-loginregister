@@ -6,8 +6,8 @@ import swal from 'sweetalert';
 // 2. function defination area
 export default function Login() {
     // 2.1 Hook variable area
-    const[username, setUsername] = useState('');
-    const[password, setPassword] = useState('');
+    const[username, setUsername] = useState();
+    const[password, setPassword] = useState();
 
     // 2.2 function area
     let sendData = ()=>{
@@ -15,6 +15,7 @@ export default function Login() {
           "identifier": username,
           "password": password
         }
+        console.log(data);
         fetch(`http://localhost:1337/api/auth/local`,{
           method: "POST",  
           headers: {

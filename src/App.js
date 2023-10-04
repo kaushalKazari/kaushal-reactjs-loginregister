@@ -6,21 +6,24 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 
 
+
 function App() {
-  
+  // if (window.localStorage.getItem('jwt_token') === null) {
+  //   return <Login />
+  // }
   return (
     <>
       <BrowserRouter>
-        <Routes> 
-          <Route path='/login' element={<Login/>}></Route>             
-          <Route path='/' element={<Layout/>}>
+        <Routes>
+          <Route path='/login' element={<Login />}></Route>
+          <Route path='/' element={<Layout />}>
             {
-              routes.map((cv,idx,arr)=>{
+              routes.map((cv, idx, arr) => {
                 return <Route path={cv.path} element={cv.element}></Route>
               })
             }
-          </Route>  
-          <Route path='/register' element={<Register/>}></Route>
+          </Route>
+          <Route path='/register' element={<Register />}></Route>
         </Routes>
       </BrowserRouter>
     </>

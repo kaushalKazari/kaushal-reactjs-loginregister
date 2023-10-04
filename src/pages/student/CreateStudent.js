@@ -16,7 +16,7 @@ export default function CreateStudent() {
     })
       .then(res => res.json())
       .then(data => {
-        let name2 = 'anil';
+        // let name2 = 'anil';
         console.log('Student --->>>>>', data.data);
         //students = data.data;
         setStudents(data.data);

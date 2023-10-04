@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import URL from '../../helpers/url';
 import JustDialNav from './JustDialNav';
+import { Link } from 'react-router-dom';
+import { URL } from '../../helpers/helpers';
 
 export default function BusinessCategory() {
     // hook area
@@ -20,11 +21,34 @@ export default function BusinessCategory() {
             })
             .catch(err => err)
     }, [])
+
+
+    
     return (
         <>
-            <JustDialNav />
+            <JustDialNav />           
             <h1>Business Category</h1>
-            <table className="table">
+            <div className='row'>
+            {
+                businessCategory.map((cv, idx, arr) => {
+                    return(<>
+                    <div className='col-md-2'>
+                        <div key={idx} className="card">
+                        <Link to={`/searchfilter?cat_name=${cv.attributes.name}`}>
+                        <img className="card-img-top" src={`${URL}` + cv.attributes.image.data.attributes.url} alt="Card image cap" />
+                        </Link>
+  <div className="card-body text-center">
+    <Link to={`/searchfilter?cat_name=${cv.attributes.name}`} className="btn btn-primary btn-sm">{cv.attributes.name}</Link>
+  </div>
+</div>
+</div>
+                    </>)
+                })
+            }
+</div>
+           
+
+            {/* <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -37,7 +61,9 @@ export default function BusinessCategory() {
                         businessCategory.map((cv, idx, arr) => {
                             return <tr key={idx}>
                                 <td>{cv.id}</td>
-                                <td>{cv.attributes.name}</td>
+                                <td>
+                                <Link>{cv.attributes.name}</Link>
+                                </td>
                                 <td>
                                     <img width='50'
                                         src={`${URL}` + cv.attributes.image.data.attributes.url} />
@@ -46,7 +72,7 @@ export default function BusinessCategory() {
                         })
                     }
                 </tbody>
-            </table>
+            </table> */}
 
         </>
     )
